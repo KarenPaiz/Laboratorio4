@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "MostrarIn";
+}
+<br />
+<br />
+<h2>Medicamentos InOrden</h2>
+<table style="width:100%">
+    <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Casa Productora</th>
+        <th>Unidades Disponibles</th>
+        <th>Precio</th>
+    </tr>
+    @foreach (var item in ViewBag.Matriz)
+    {
+        if (item != null)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Nombre</td>
+                <td>@item.descripcion</td>
+                <td>@item.Productora</td>
+                <td>@item.Cantidad</td>
+                <td>$@item.Precio</td>
+            </tr>
+        }
+    }
+</table>
+<br />
+<br />
