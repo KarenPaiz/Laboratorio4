@@ -37,6 +37,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArbolB.cs" />
     <Compile Include="ArbolBinario.cs" />
     <Compile Include="Medicamento.cs" />
     <Compile Include="Nodo.cs" />

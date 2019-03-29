@@ -13,6 +13,7 @@ namespace Laboratorio3.Controllers
     {
         public static ArbolBinario.ArbolBinario ArbolMedicamentos = new ArbolBinario.ArbolBinario();
         public static ArbolBinario.Medicamento[] mostrar;
+        public static ArbolBinario.ArbolB ArbolMedicamentosB = new ArbolBinario.ArbolB(TAMANODELARBOL);
         public static List<ArbolBinario.Medicamento> medicamentos = new List<ArbolBinario.Medicamento>();
         public static int a = 0;
         public static int TAMANODELARBOL;
@@ -37,6 +38,7 @@ namespace Laboratorio3.Controllers
                         aux.Precio = Convert.ToDouble(s.Split('|')[4]);
                         aux.Cantidad = Convert.ToInt32(s.Split('|')[5]);
                         ArbolMedicamentos.AgregarElemento(aux);
+                        ArbolMedicamentosB.insertar(aux);
                         medicamentos.Add(aux);
                     }
                 }
