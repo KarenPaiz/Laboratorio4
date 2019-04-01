@@ -12,15 +12,16 @@ namespace Laboratorio3.Controllers
     public class MedicametosController : Controller
     {
         public static ArbolBinario.ArbolBinario ArbolMedicamentos = new ArbolBinario.ArbolBinario();
+        public static List<ArbolBinario.Medicamento> mostrar1;
         public static ArbolBinario.Medicamento[] mostrar;
-        public static ArbolBinario.ArbolB ArbolMedicamentosB = new ArbolBinario.ArbolB(TAMANODELARBOL);
+        public static ArbolBinario.ArbolB ArbolMedicamentosB;
         public static List<ArbolBinario.Medicamento> medicamentos = new List<ArbolBinario.Medicamento>();
         public static int a = 0;
         public static int TAMANODELARBOL;
         // GET: Medicametos
         public void leerArchivo()
         {
-
+            ArbolMedicamentosB = new ArbolBinario.ArbolB(TAMANODELARBOL);
             string Path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/MEDICAMENTOS.csv";
             ArbolBinario.Medicamento aux;
             using (StreamReader sr = System.IO.File.OpenText(Path))
@@ -85,12 +86,13 @@ namespace Laboratorio3.Controllers
             {
                 ingresoTamano();
                 leerArchivo();
+                
             }
 
             if (a == 0)
                 a = medicamentos.Count;
 
-            mostrar = ArbolMedicamentos.Mostrar(3, a);
+            mostrar1 = ArbolMedicamentosB.recorre();
             ViewBag.Matriz = mostrar;
             GuardarJson("MEDICAMENTOS InOrden");
             return View();

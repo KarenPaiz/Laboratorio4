@@ -10,7 +10,7 @@ namespace ArbolBinario
     public class BNodo
     {
         public int nLlaes { get; set; }
-        int grado;
+        static int grado;
         public Medicamento[] valores { get; set; }
         public int llavesDisponibles { get; set; }
         public BNodo padre { get; set; }
@@ -19,12 +19,12 @@ namespace ArbolBinario
         public BNodo() { }
         public BNodo(int grado1)
         {
-            this.grado = grado1;
+            grado = grado1;
             valores = new Medicamento[grado];
             subarboles = new BNodo[grado + 1];
-        }
+        } // constructor asigna el tamano
         bool existemedicamento = false;
-        public bool nodoEstaVacio()
+        public  bool nodoEstaVacio() 
         {
             foreach (Medicamento medActual in valores)
             {
@@ -36,7 +36,7 @@ namespace ArbolBinario
             }
             return !existemedicamento; //Si regresa true es porque está vacio
         }
-        bool ExisteEspacio = false;
+        static bool ExisteEspacio = false;
         public bool existeEspacioEnNodo()
         {
             for (int i = 0; i < grado - 1; i++)
@@ -52,20 +52,21 @@ namespace ArbolBinario
         public BNodo insertarEnNodo(Medicamento nuevoValor)
         {
             BNodo AUXILIARDERETORNO = new BNodo(grado);
-            if (this.nodoEstaVacio())
+            if (nodoEstaVacio()==true)
             {
+                valores = new Medicamento[grado];
                 valores[0] = nuevoValor;
             }
-            else if (existeEspacioEnNodo())
+            else if (existeEspacioEnNodo()==true)
             {
                 int recorre = 0;
-                while (valores[recorre] != null)
+                while (recorre < grado && valores[recorre] != null)
                 {
                     recorre++;
                 }
                 valores[recorre] = nuevoValor;
 
-                var valoresTemp = valores.ToList();
+                List<Medicamento> valoresTemp = valores.ToList();
                 valoresTemp.Sort(compararNombreMedicamentos);
                 valores = valoresTemp.ToArray();
             }
@@ -133,13 +134,16 @@ namespace ArbolBinario
         }
         public int compararNombreMedicamentos(Medicamento m1, Medicamento m2)
         {
-
-            return m1.Nombre.CompareTo(m2.Nombre);
+            if (m1 != null && m2 != null)
+                return m1.Nombre.CompareTo(m2.Nombre);
+            else
+                return 0;
         }
     }
     public class ArbolB
     {
-        public int grado;
+        public static int ContadorDeElementos =0;
+        static  int grado;
         public ArbolB(int grado1)
         {
             grado = grado1;
@@ -147,6 +151,8 @@ namespace ArbolBinario
         public BNodo Raiz;
         public void insertar(Medicamento medicamento)
         {
+            if (Raiz==null)
+                Raiz = new BNodo(grado);
 
             BNodo aux = new BNodo(grado);
             BNodo aux2 = new BNodo(grado);
@@ -228,7 +234,27 @@ namespace ArbolBinario
                     // PASRA POR TTODO!!! EL RECORRIDO DE ABAJO HACIA ARRIBA Y SI EL NODO LLEGÓ HASTA EL AUXILIAR EN VALORES LLAMAR EL DIVIDIR NODO. HACERLO TODO Y LUEGO IGUALAR LA RAIZ
                 }
             }
-
+            ContadorDeElementos++;
+        }
+        public List<Medicamento> datos1 = new List<Medicamento>();
+        public List<Medicamento> recorre ()
+        {
+            mostrar(Raiz);
+            return datos1;
+        }
+        void mostrar(BNodo nNodo)
+        {
+            if (nNodo.subarboles[0] != null)
+            {
+                for (int i = 0; i < grado+1; i++)
+                {
+                    mostrar(nNodo.subarboles[i]);
+                }
+            }
+            for (int i = 0; i < grado-1; i++)
+            {
+                datos1.Add(nNodo.valores[i]);
+            }
         }
     }
 }
